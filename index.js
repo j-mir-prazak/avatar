@@ -32,11 +32,13 @@ function cleanPID(pid) {
 var file = 1
 
 // var assets = new Array();
-var assets = fs.readDirSync('./assets');
+var assets = fs.readdirSync('./assets/assets');
 
 // var assets_placeholder = new Array();
-var assets_placeholder = new Array('./assets_placeholder');
+var assets_placeholder = fs.readdirSync('./assets/assets_placeholder');
 
+console.log("assets: " + assets)
+console.log("assets_placeholder: " + assets_placeholder)
 // assets.push("/home/manjaro/Videos/AI_placeholders/video.mp4")
 // assets_placeholder.push("/home/manjaro/Videos/AI_placeholders/placeholder.mp4")
 
