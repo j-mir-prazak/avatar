@@ -33,7 +33,6 @@ var file = 1
 
 // var assets = new Array();
 var assets = fs.readdirSync('./assets/assets');
-
 // var assets_placeholder = new Array();
 var assets_placeholder = fs.readdirSync('./assets/assets_placeholder');
 
