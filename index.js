@@ -1,9 +1,8 @@
 var child_process = require('child_process')
 var events = require('events');
 var fs = require('fs');
-
-
 var mplayer = require('./node_modules/node-mplayer')
+
 
 
 var StringDecoder = require('string_decoder').StringDecoder
@@ -419,7 +418,7 @@ function setupPlayer( type ) {
 
 	else if ( type == "placeholder" ) {
 
-		asset = assets_placeholder[ randomBetween(1, assets_placeholder.length) - 1 ]
+		asset = assets_placeholder[ randomBetween( 1, assets_placeholder.length ) - 1 ]
 		// console.log(asset)
 
 	}
@@ -448,9 +447,7 @@ function setupPlayer( type ) {
 		player.placeholder = setTimeout( function() {
 
 			// console.log("placeholder.")
-
 			setupPlayer("placeholder")
-
 
 		}, randomBetween(1000*61,1000*183))
 
@@ -462,7 +459,7 @@ function setupPlayer( type ) {
 
 	player.safety = setTimeout(function() {
 
-			if ( player.instance.process ) player.instance.process.kill()
+			if ( player.instance && player.instance.process ) player.instance.process.kill()
 
 		}, 1000 * 60 * 10)
 
@@ -471,12 +468,6 @@ function setupPlayer( type ) {
 }
 
 
-// for( var i = 0; i < 1000; i++) {
-// 	var r = randomBetween(1, assets_placeholder.length)
-// 	// var r = randomBetween(0, 2)
-// 	console.log(r)
-//
-// }
 
 
 player.placeholder = setTimeout( function() {
