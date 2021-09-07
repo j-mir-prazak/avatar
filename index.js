@@ -2,6 +2,10 @@ var child_process = require('child_process')
 var events = require('events');
 var fs = require('fs');
 
+
+var mplayer = require('./node_modules/node-mplayer')
+
+
 var StringDecoder = require('string_decoder').StringDecoder
 
 process.on('SIGHUP',  function(){ console.log('CLOSING [SIGHUP]'); process.emit("SIGINT"); })
@@ -26,12 +30,42 @@ function cleanPID(pid) {
 	}
 }
 
+var file = 1
+
+var assets = new Array();
+var assets_placeholder = new Array();
+
+assets.push("/home/manjaro/Videos/AI_placeholders/video.mp4")
+assets_placeholder.push("/home/manjaro/Videos/AI_placeholders/placeholder.mp4")
+
+
 
 var arduino = {
 
 	reader:"",
 	port:"",
-	active:false
+	active:false,
+	busy:false,
+	values: {
+		first: new Array(),
+		second: new Array(),
+		third: new Array()
+	},
+	last_poll: new Date(),
+  poll_int: 10,
+	min_distance: 100
+
+}
+
+console.log( arduino.values )
+
+var player = {
+
+	instance: "",
+	active: false,
+	asset: assets[file - 1],
+	safety: null,
+	timeout: null
 
 }
 
@@ -97,12 +131,18 @@ function ls(search) {
 			console.log(search + ' not to be found.')
 
 			if ( arduino.port ) {
+
 				console.log('killing running reader.')
 
 				arduino.reader.kill()
 				arduino.reader = ""
 				arduino.port = ""
 				arduino.active = false
+				arduino.values.first = new Array()
+				arduino.values.second = new Array()
+				arduino.values.third = new Array()
+				arduino.busy = false
+
 				// console.log("")
 
 			}
@@ -161,13 +201,14 @@ function cat(arduino) {
 	}, 500)
 
 	cat.stdout.on('data', (data) => {
+
 		string = decoder.write(data)
 
 		string=string.split(/\r?\n/)
 
 		for( var i = 0; i < string.length; i++) {
 
-			if ( string[i] != "" ) console.log(string[i])
+			// if ( string[i] != "" ) console.log(string[i])
 			// console.log( string[i].length > 0 && string[i].match(/^system:connected/) != null && ! arduino.active )
 
 			if ( string[i].length > 0 && string[i].match(/^system:connected*/) && ! arduino.active ) {
@@ -178,6 +219,91 @@ function cat(arduino) {
 
 				console.log( arduino.port + " is connected")
 			}
+
+			else if ( string[i].length > 0 && string[i].match(/^value:/) && arduino.active ) {
+
+				var date = new Date();
+
+				// console.log( "poll interval: " + ( ( date - arduino.last_poll ) >= arduino.poll_int ) )
+
+			 	var split = string[i].split(/:/)
+
+				if ( split.length == 4 && split[0] == "value" && ( ( date - arduino.last_poll ) >= arduino.poll_int ) && ! arduino.busy ) {
+
+					arduino.busy = true;
+
+					// console.log(arduino.values.first.length >= 5 && arduino.values.second.length >= 5 && arduino.values.third.length >= 5)
+
+					arduino.values.first.push( parseFloat( split[1] ) )
+					arduino.values.second.push( parseFloat( split[2]) )
+					arduino.values.third.push( parseFloat( split[3] ) )
+
+					// console.log(arduino.values)
+
+					if ( arduino.values.first.length >= 5 && arduino.values.second.length >= 5 && arduino.values.third.length >= 5 ) {
+
+						var average = {
+
+							first: 0,
+							second: 0,
+							third: 0
+
+						}
+
+						for ( var i = 0; i < 5; i++ ) {
+							average.first = average.first + arduino.values.first[i]
+							average.second = average.second + arduino.values.second[i]
+							average.third = average.third + arduino.values.third[i]
+
+						}
+
+
+
+						average.first = average.first / 5
+						average.second = average.second / 5
+						average.third = average.third / 5
+
+						arduino.values.first.shift()
+						arduino.values.second.shift()
+						arduino.values.third.shift()
+
+						// console.log( Date.now() +":" + average.first +":"+ average.second +":"+ average.third )
+
+						if ( average.first < arduino.min_distance || average.second < arduino.min_distance || average.third < arduino.min_distance ) {
+
+							if ( player.active == false ) {
+
+								player.active = true
+
+								setupPlayer("video")
+
+								//
+								// console.log(" !! bang !! " + player.asset )
+								// setTimeout(function(){
+								//
+								// 	player.active = false
+								//
+								// 	}, 5000)
+
+								}
+
+
+
+						}
+
+					}
+
+
+					arduino.last_poll = date
+					arduino.busy = false
+
+
+
+				}
+
+
+			}
+
 
 			else if ( string[i].length > 0 && string[i].match(/^system:encoders/) && arduino.active ) {
 
@@ -225,8 +351,12 @@ function cat(arduino) {
 	cat.on('exit', (code) => {
 
 		console.log( "reader exited.")
-		clearInterval(echo)
 
+
+
+		clearInterval(echo)
+		arduino.reader = null
+		arduino.port = ""
 
 		// console.log("kill ttys")
 		// console.log(tty["tty"] + " was disconnected. killing all players on this node.")
@@ -235,6 +365,67 @@ function cat(arduino) {
 	});
 
 	return cat;
+}
+
+
+function randomPlaceholder() {
+
+	
+
+
+	return
+}
+
+
+
+function setupPlayer( type ) {
+
+	player.active = true
+
+	var type = type || false
+
+	var asset = false
+
+	if ( type == "video" ) {
+
+		asset = player.asset
+
+	}
+
+	else ( type == "placeholder" ) {
+
+		asset =
+
+
+	}
+
+	var player_instance = mplayer(  )
+
+	player_instance.on("close", function() {
+
+		console.log( "video finished." )
+
+		if ( player.safety ) clearTimeout( player.safety )
+
+
+		player.timeout = setTimeout ( function() {
+
+			player.active = false
+
+			}, 2000);
+
+		})
+
+	player.instance = player_instance
+
+	player.safety = setTimeout(function() {
+
+			if ( player.instance.process ) player.instance.process.kill()
+
+		}, 2000)
+
+	// console.log(player_instance)
+
 }
 
 
