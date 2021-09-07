@@ -65,7 +65,8 @@ var player = {
 	active: false,
 	asset: assets[file - 1],
 	safety: null,
-	timeout: null
+	timeout: null,
+	placeholder: null
 
 }
 
@@ -368,23 +369,47 @@ function cat(arduino) {
 }
 
 
-function randomPlaceholder() {
+function randomBetween(x,y) {
 
-	
+	var random = Math.floor( Math.floor( Math.random() * ( y ) ) + x  )
 
+	return random
 
-	return
 }
 
+
+// function randomPlaceholder() {
+//
+//
+//
+//
+// 	return
+// }
+
+
+var placeholder = null
 
 
 function setupPlayer( type ) {
 
 	player.active = true
 
+	// console.log(type)
+
+	if ( placeholder ) {
+
+		// console.log("clearing interval.")
+		clearInterval( placeholder )
+		// console.log("cleared interval.")
+
+
+	}
+
 	var type = type || false
 
 	var asset = false
+
+	if ( player.placeholder ) clearTimeout( player.placeholder )
 
 	if ( type == "video" ) {
 
@@ -392,14 +417,15 @@ function setupPlayer( type ) {
 
 	}
 
-	else ( type == "placeholder" ) {
+	else if ( type == "placeholder" ) {
 
-		asset =
-
+		asset = assets_placeholder[ randomBetween(1, assets_placeholder.length) - 1 ]
+		// console.log(asset)
 
 	}
 
-	var player_instance = mplayer(  )
+	var player_instance = mplayer( asset )
+
 
 	player_instance.on("close", function() {
 
@@ -410,9 +436,25 @@ function setupPlayer( type ) {
 
 		player.timeout = setTimeout ( function() {
 
+			console.log("clear.")
+
 			player.active = false
 
-			}, 2000);
+			}, 2000)
+
+
+
+
+		player.placeholder = setTimeout( function() {
+
+			// console.log("placeholder.")
+
+			setupPlayer("placeholder")
+
+
+		}, randomBetween(1000*61,1000*183))
+
+
 
 		})
 
@@ -422,19 +464,29 @@ function setupPlayer( type ) {
 
 			if ( player.instance.process ) player.instance.process.kill()
 
-		}, 2000)
+		}, 1000 * 60 * 10)
 
 	// console.log(player_instance)
 
 }
 
 
+// for( var i = 0; i < 1000; i++) {
+// 	var r = randomBetween(1, assets_placeholder.length)
+// 	// var r = randomBetween(0, 2)
+// 	console.log(r)
+//
+// }
 
 
+player.placeholder = setTimeout( function() {
+
+	// console.log("placeholder.")
+
+	setupPlayer("placeholder")
 
 
-
-
+}, randomBetween(1000*61,1000*183) )
 
 
 setInterval(function(){
