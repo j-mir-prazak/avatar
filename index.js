@@ -1,7 +1,7 @@
 var child_process = require('child_process')
 var events = require('events');
 var fs = require('fs');
-var mplayer = require('./node_modules/node-mplayer')
+var mplayer = require('./node_modules/node-omxplayer')
 
 
 
@@ -279,7 +279,7 @@ function cat(arduino) {
 
 						if ( average.first < arduino.min_distance.left || average.second < arduino.min_distance.middle || average.third < arduino.min_distance.right ) {
 
-							console.log("trigger.")
+							// console.log("trigger.")
 							if ( player.active == false ) {
 
 								player.active = true
