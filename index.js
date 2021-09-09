@@ -29,7 +29,7 @@ function cleanPID(pid) {
 	}
 }
 
-var file = 1
+var file = process.argv[2] || 0
 
 // var assets = new Array();
 var assets = fs.readdirSync('./assets/assets');
@@ -56,7 +56,11 @@ var arduino = {
 	},
 	last_poll: new Date(),
   poll_int: 10,
-	min_distance: 100
+	min_distance: {
+		left:100,
+		middle:100,
+		right:100
+	}
 
 }
 
@@ -273,7 +277,7 @@ function cat(arduino) {
 
 						// console.log( Date.now() +":" + average.first +":"+ average.second +":"+ average.third )
 
-						if ( average.first < arduino.min_distance || average.second < arduino.min_distance || average.third < arduino.min_distance ) {
+						if ( average.first < arduino.min_distance.left || average.second < arduino.min_distance.middle || average.third < arduino.min_distance.right ) {
 
 							if ( player.active == false ) {
 
@@ -422,7 +426,7 @@ function setupPlayer( type ) {
 
 	else if ( type == "placeholder" ) {
 
-		asset = assets_placeholder[ randomBetween( 1, assets_placeholder.length ) - 1 ]
+		asset = assets_placeholder[ randomBetween( 0, assets_placeholder.length - 1 ) ]
 		// console.log(asset)
 
 	}
