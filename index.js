@@ -70,7 +70,7 @@ var player = {
 
 	instance: "",
 	active: false,
-	asset: assets[file - 1],
+	asset: assets[file],
 	safety: null,
 	timeout: null,
 	placeholder: null
@@ -246,7 +246,7 @@ function cat(arduino) {
 					arduino.values.second.push( parseFloat( split[2]) )
 					arduino.values.third.push( parseFloat( split[3] ) )
 
-					console.log(arduino.values)
+					// console.log(arduino.values)
 
 					if ( arduino.values.first.length >= 5 && arduino.values.second.length >= 5 && arduino.values.third.length >= 5 ) {
 
@@ -282,10 +282,11 @@ function cat(arduino) {
 							// console.log("trigger.")
 							if ( player.active == false ) {
 
+
 								player.active = true
 
 								setupPlayer("video")
-
+								console.log(player)
 								//
 								// console.log(" !! bang !! " + player.asset )
 								// setTimeout(function(){
