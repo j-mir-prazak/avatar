@@ -286,7 +286,7 @@ function cat(arduino) {
 								player.active = true
 
 								setupPlayer("video")
-								console.log(player)
+								// console.log(player)
 								//
 								// console.log(" !! bang !! " + player.asset )
 								// setTimeout(function(){
@@ -449,7 +449,7 @@ function setupPlayer( type ) {
 
 			player.active = false
 
-			}, 2000)
+		}, 1000 * 5)
 
 
 
