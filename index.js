@@ -31,6 +31,9 @@ function cleanPID(pid) {
 
 var file = process.argv[2] || 0
 
+var assets_folder = './assets/assets'
+var assets_placeholder_folder = './assets/assets_placeholder'
+
 // var assets = new Array();
 var assets = fs.readdirSync('./assets/assets');
 // var assets_placeholder = new Array();
@@ -70,7 +73,7 @@ var player = {
 
 	instance: "",
 	active: false,
-	asset: assets[file],
+	asset: assets_folder + '/' + assets[file],
 	safety: null,
 	timeout: null,
 	placeholder: null
@@ -428,7 +431,7 @@ function setupPlayer( type ) {
 
 	else if ( type == "placeholder" ) {
 
-		asset = assets_placeholder[ randomBetween( 0, assets_placeholder.length - 1 ) ]
+		asset = assets_folder + '/' + assets_placeholder[ randomBetween( 0, assets_placeholder.length - 1 ) ]
 		// console.log(asset)
 
 	}
@@ -459,7 +462,7 @@ function setupPlayer( type ) {
 			// console.log("placeholder.")
 			setupPlayer("placeholder")
 
-		}, randomBetween(1000*61,1000*183))
+		}, randomBetween( 1000*61 , 1000*183 ))
 
 
 
