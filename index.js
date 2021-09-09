@@ -431,7 +431,7 @@ function setupPlayer( type ) {
 
 	else if ( type == "placeholder" ) {
 
-		asset = assets_folder + '/' + assets_placeholder[ randomBetween( 0, assets_placeholder.length - 1 ) ]
+		asset = assets_placeholder_folder + '/' + assets_placeholder[ randomBetween( 0, assets_placeholder.length - 1 ) ]
 		// console.log(asset)
 
 	}
