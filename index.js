@@ -280,9 +280,9 @@ function cat(arduino) {
 
 						// console.log( Date.now() +":" + average.first +":"+ average.second +":"+ average.third )
 
-						if ( average.first < arduino.min_distance.left || average.second < arduino.min_distance.middle || average.third < arduino.min_distance.right ) {
+						if ( ( average.first < arduino.min_distance.left && average.first > 5 ) || ( average.second < arduino.min_distance.middle && average.second > 5 )|| ( average.third < arduino.min_distance.right && average > 5 ) ) {
 
-							// console.log("trigger.")
+							// console.log("trigger.")average.first
 							if ( player.active == false ) {
 
 
