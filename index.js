@@ -29,7 +29,7 @@ function cleanPID(pid) {
 	}
 }
 
-var file = process.argv[2] || 0
+var file = process.argv[2] - 1 || 0
 
 var assets_folder = './assets/assets'
 var assets_placeholder_folder = './assets/assets_placeholder'
@@ -462,7 +462,7 @@ function setupPlayer( type ) {
 			// console.log("placeholder.")
 			setupPlayer("placeholder")
 
-		}, randomBetween( 1000*61 , 1000*183 ))
+		}, randomBetween( 1000*61 , 1000*100 ))
 
 
 
