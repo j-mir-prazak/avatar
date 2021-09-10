@@ -262,7 +262,7 @@ function cat(arduino) {
 					arduino.values.second.push( parseFloat( split[2]) )
 					arduino.values.third.push( parseFloat( split[3] ) )
 
-					// console.log(arduino.values)
+					console.log(arduino.values)
 
 					if ( arduino.values.first.length >= 5 && arduino.values.second.length >= 5 && arduino.values.third.length >= 5 ) {
 
