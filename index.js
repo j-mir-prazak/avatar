@@ -39,10 +39,27 @@ var assets = fs.readdirSync('./assets/assets');
 // var assets_placeholder = new Array();
 var assets_placeholder = fs.readdirSync('./assets/assets_placeholder');
 
+var distance_reloader = null
+
+var distances = fs.readFileSync('./assets/distances.json')
+distances = JSON.parse(distances)
+
+console.log(distances)
+
+distance_reloader= setInterval(function(){
+
+	distances = fs.readFileSync('./assets/distances.json')
+	distances = JSON.parse(distances)
+
+	// console.log(distances)
+
+}, 5000)
+
 console.log("assets: " + assets)
 console.log("assets_placeholder: " + assets_placeholder)
 // assets.push("/home/manjaro/Videos/AI_placeholders/video.mp4")
 // assets_placeholder.push("/home/manjaro/Videos/AI_placeholders/placeholder.mp4")
+
 
 
 
@@ -59,11 +76,7 @@ var arduino = {
 	},
 	last_poll: new Date(),
   poll_int: 10,
-	min_distance: {
-		left:100,
-		middle:100,
-		right:100
-	}
+	min_distance: distances
 
 }
 
