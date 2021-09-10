@@ -275,9 +275,18 @@ function cat(arduino) {
 						}
 
 						for ( var i = 0; i < 5; i++ ) {
-							average.first = average.first + arduino.values.first[i]
-							average.second = average.second + arduino.values.second[i]
-							average.third = average.third + arduino.values.third[i]
+							
+							value1 = arduino.values.first[i]
+							value2 = arduino.values.second[i]
+							value3 = arduino.values.third[i]
+
+							if (value1 < 3) value1 = 500
+							if (value2 < 3) value2 = 500
+							if (value3 < 3) value3 = 500
+
+							average.first = average.first + value1
+							average.second = average.second + value2
+							average.third = average.third + value3
 
 						}
 
@@ -293,7 +302,7 @@ function cat(arduino) {
 
 						// console.log( Date.now() +":" + average.first +":"+ average.second +":"+ average.third )
 
-						if ( ( average.first < arduino.min_distance.left && average.first > 5 ) || ( average.second < arduino.min_distance.middle && average.second > 5 )|| ( average.third < arduino.min_distance.right && average > 5 ) ) {
+						if ( ( average.first < arduino.min_distance.left ) || ( average.second < arduino.min_distance.middle )|| ( average.third < arduino.min_distance.right ) ) {
 
 							// console.log("trigger.")average.first
 							if ( player.active == false ) {
