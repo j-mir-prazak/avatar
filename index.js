@@ -62,7 +62,6 @@ console.log("assets_placeholder: " + assets_placeholder)
 
 
 
-
 var arduino = {
 
 	reader:"",
