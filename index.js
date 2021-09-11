@@ -281,9 +281,9 @@ function cat(arduino) {
 							value2 = arduino.values.second[i]
 							value3 = arduino.values.third[i]
 
-							if (value1 < 3) value1 = 250
-							if (value2 < 3) value2 = 250
-							if (value3 < 3) value3 = 250
+							if (value1 < 3) value1 = 300
+							if (value2 < 3) value2 = 300
+							if (value3 < 3) value3 = 300
 
 							average.first = average.first + value1
 							average.second = average.second + value2
