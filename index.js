@@ -77,7 +77,7 @@ var arduino = {
 	last_poll: new Date(),
   poll_int: 2,
 	min_distance: distances,
-	poll_length:2
+	poll_length:3
 
 }
 
@@ -281,9 +281,9 @@ function cat(arduino) {
 							value2 = arduino.values.second[i]
 							value3 = arduino.values.third[i]
 
-							if (value1 < 3) value1 = 300
-							if (value2 < 3) value2 = 300
-							if (value3 < 3) value3 = 300
+							if (value1 < 3) value1 = arduino.min_distance.left * 2
+							if (value2 < 3) value2 = arduino.min_distance.middle * 2
+							if (value3 < 3) value3 = arduino.min_distance.right * 2
 
 							average.first = average.first + value1
 							average.second = average.second + value2
