@@ -281,9 +281,9 @@ function cat(arduino) {
 							value2 = arduino.values.second[i]
 							value3 = arduino.values.third[i]
 
-							if (value1 < 3) value1 = 500
-							if (value2 < 3) value2 = 500
-							if (value3 < 3) value3 = 500
+							if (value1 < 3) value1 = 250
+							if (value2 < 3) value2 = 250
+							if (value3 < 3) value3 = 250
 
 							average.first = average.first + value1
 							average.second = average.second + value2
@@ -393,6 +393,7 @@ function cat(arduino) {
 		clearInterval(echo)
 		arduino.reader = null
 		arduino.port = ""
+		arduino.active = false
 
 		// console.log("kill ttys")
 		// console.log(tty["tty"] + " was disconnected. killing all players on this node.")
