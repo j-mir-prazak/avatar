@@ -75,8 +75,9 @@ var arduino = {
 		third: new Array()
 	},
 	last_poll: new Date(),
-  poll_int: 10,
-	min_distance: distances
+  poll_int: 2,
+	min_distance: distances,
+	poll_length:4
 
 }
 
@@ -264,7 +265,7 @@ function cat(arduino) {
 
 					console.log(arduino.values)
 
-					if ( arduino.values.first.length >= 5 && arduino.values.second.length >= 5 && arduino.values.third.length >= 5 ) {
+					if ( arduino.values.first.length >= poll_length && arduino.values.second.length >= poll_length && arduino.values.third.length >= poll_length ) {
 
 						var average = {
 
@@ -292,9 +293,9 @@ function cat(arduino) {
 
 
 
-						average.first = average.first / 5
-						average.second = average.second / 5
-						average.third = average.third / 5
+						average.first = average.first / poll_length
+						average.second = average.second / poll_length
+						average.third = average.third / poll_length
 
 						arduino.values.first.shift()
 						arduino.values.second.shift()
