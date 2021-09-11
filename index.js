@@ -77,7 +77,7 @@ var arduino = {
 	last_poll: new Date(),
   poll_int: 2,
 	min_distance: distances,
-	poll_length:3
+	poll_length:4
 
 }
 
