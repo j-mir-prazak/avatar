@@ -154,7 +154,7 @@ function ls(search) {
 
 			console.log(search + ' not to be found.')
 
-			if ( arduino.port ) {
+			if ( arduino.port || arduino.reader ) {
 
 				console.log('killing running reader.')
 
@@ -275,7 +275,7 @@ function cat(arduino) {
 						}
 
 						for ( var i = 0; i < 5; i++ ) {
-							
+
 							value1 = arduino.values.first[i]
 							value2 = arduino.values.second[i]
 							value3 = arduino.values.third[i]
@@ -302,7 +302,7 @@ function cat(arduino) {
 
 						// console.log( Date.now() +":" + average.first +":"+ average.second +":"+ average.third )
 
-						if ( ( average.first < arduino.min_distance.left ) || ( average.second < arduino.min_distance.middle )|| ( average.third < arduino.min_distance.right ) ) {
+						if ( ( average.first < arduino.min_distance.left ) || ( average.second < arduino.min_distance.middle ) || ( average.third < arduino.min_distance.right ) ) {
 
 							// console.log("trigger.")average.first
 							if ( player.active == false ) {
