@@ -263,7 +263,7 @@ function cat(arduino) {
 					arduino.values.second.push( parseFloat( split[2]) )
 					arduino.values.third.push( parseFloat( split[3] ) )
 
-					console.log(arduino.values)
+					// console.log(arduino.values)
 
 					if ( arduino.values.first.length >= arduino.poll_length && arduino.values.second.length >= arduino.poll_length && arduino.values.third.length >= arduino.poll_length ) {
 
@@ -301,11 +301,11 @@ function cat(arduino) {
 						arduino.values.second.shift()
 						arduino.values.third.shift()
 
-						// console.log( Date.now() +":" + average.first +":"+ average.second +":"+ average.third )
+						console.log( Date.now() +":" + average.first +":"+ average.second +":"+ average.third )
 
 						if ( ( average.first < arduino.min_distance.left ) || ( average.second < arduino.min_distance.middle ) || ( average.third < arduino.min_distance.right ) ) {
 
-							// console.log("trigger.")average.first
+							console.log("trigger.")
 							if ( player.active == false ) {
 
 
