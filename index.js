@@ -293,9 +293,9 @@ function cat(arduino) {
 
 
 
-						average.first = average.first / arduino.poll_length
-						average.second = average.second / arduino.poll_length
-						average.third = average.third / arduino.poll_length
+						average.first = Math.floor( average.first / arduino.poll_length )
+						average.second = Math.floor( average.second / arduino.poll_length )
+						average.third = Math.floor( average.third / arduino.poll_length )
 
 						arduino.values.first.shift()
 						arduino.values.second.shift()
