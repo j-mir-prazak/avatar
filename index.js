@@ -275,7 +275,7 @@ function cat(arduino) {
 
 						}
 
-						for ( var i = 0; i < 5; i++ ) {
+						for ( var i = 0; i < poll_length; i++ ) {
 
 							value1 = arduino.values.first[i]
 							value2 = arduino.values.second[i]
